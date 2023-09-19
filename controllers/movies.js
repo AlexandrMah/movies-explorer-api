@@ -1,6 +1,6 @@
 const Movie = require('../models/movie');
 
-/*---------Ошибки-----------------*/
+/* ---------Ошибки-----------------*/
 const { BadRequestError } = require('../utils/badRequest');
 const { ForbiddenError } = require('../utils/forbidden');
 const { NotFoundError } = require('../utils/notFound');
@@ -29,7 +29,7 @@ function createMovies(req, res, next) {
 function deleteMovie(req, res, next) {
   const id = req.params.movieId;
   const userId = req.user._id;
-  Movie.findById(id)
+  return Movie.findById(id)
     .then((movie) => {
       if (!movie) {
         next(new NotFoundError('Нет такого id'));
@@ -41,10 +41,8 @@ function deleteMovie(req, res, next) {
         return;
       }
 
-      Movie.deleteOne({ _id: id })
-        .then(() => {
-          res.status(200).send({ message: 'Фильм удален успешно' });
-        });
+      movie.deleteOne({ _id: id })
+        .then(() => res.status(200).send({ message: 'Фильм удален успешно' }));
     })
     .catch((err) => next(err));
 }

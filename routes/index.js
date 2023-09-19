@@ -5,7 +5,7 @@ const cors = require('cors');
 const userRouter = require('./users');
 const movieRouter = require('./movies');
 const {
-  createUser, login,
+  createUser, login, userOut,
 } = require('../controllers/users');
 const { auth } = require('../middlewares/auth');
 const { error } = require('../middlewares/errors');
@@ -43,6 +43,7 @@ router.use(auth);
 
 router.use('/users', userRouter);
 router.use('/movies', movieRouter);
+router.post('/signout', userOut);
 
 router.use(errorLogger);
 

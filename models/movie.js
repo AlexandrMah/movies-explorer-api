@@ -46,7 +46,7 @@ const movieSchema = new mongoose.Schema({
     required: [true, 'Поле "trailerLink" должно быть заполнено'],
   },
 
-  thumbnail: { // миниатюрное изображение постера к фильму. Обязательное поле-строка. Запишите её URL-адресом.
+  thumbnail: { // миниатюрное изобр.я постера к фильму. Обязательное.Запишите её URL-адресом.
     type: String,
     validate: {
       validator: (v) => validator.isURL(v),
@@ -61,7 +61,7 @@ const movieSchema = new mongoose.Schema({
     ref: 'user',
   },
 
-  movieId: { // id фильма, который содержится в ответе сервиса MoviesExplorer. Обязательное поле в формате number.
+  movieId: { // id фильма, который содержится в ответе сервиса MoviesExplorer. Обяз. Формат number.
     type: Number,
     required: [true, 'Поле "movieId" должно быть заполнено'],
   },

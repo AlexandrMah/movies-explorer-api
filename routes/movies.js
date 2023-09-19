@@ -34,7 +34,7 @@ router.post('/', celebrate({
       /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{1,6}\b([-a-zA-Z0-9\-._~:/?#[\]@!$&'()*+.;=]*)$/,
     ), // миниатюрное изображение постера к фильму
 
-    movieId: Joi.number().required(), // id фильма, который содержится в ответе сервиса MoviesExplorer
+    movieId: Joi.number().required(), // id фильма, который сод-ся в ответе сервиса MoviesExplorer
 
   }),
 }), createMovies);

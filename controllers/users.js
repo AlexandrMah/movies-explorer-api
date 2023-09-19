@@ -6,7 +6,7 @@ require('dotenv').config();
 /*---------------------*/
 const User = require('../models/user');
 
-/*------Ошибки--------*/
+/* ------Ошибки--------*/
 const { BadRequestError } = require('../utils/badRequest');
 const { UnauthorizedError } = require('../utils/unauthorized');
 const { NotFoundError } = require('../utils/notFound');
@@ -47,9 +47,11 @@ function changeProfile(req, res, next) {
     .catch((err) => {
       if (err.massage === 'DocumentNotFoundError') {
         next(new NotFoundError('Нет такого адреса'));
-        return;
+      } else if (err.name === 'MongoError' && err.code === 11000) {
+        next(new ConflictError('Такая почта уже есть'));
+      } else {
+        next(err);
       }
-      next(err);
     });
 }
 
@@ -78,7 +80,6 @@ const login = async (req, res, next) => {
       { expiresIn: '7d' },
     );
     /*---------------------*/
-    // res.status(200).json(token);
     res.status(200).send({ token });
   } catch (err) {
     if (err.name === 'ValidationError') {
@@ -104,9 +105,14 @@ const userInfo = (req, res, next) => {
     });
 };
 
+const userOut = (req, res) => {
+  res.clearCookie('token').send({ message: 'Выход выполнен' });
+};
+
 module.exports = {
   createUser,
   userInfo,
   changeProfile,
   login,
+  userOut,
 };
